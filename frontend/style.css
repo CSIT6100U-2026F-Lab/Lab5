@@ -1,0 +1,386 @@
+/* Reset default spacing so the layout fills the viewport */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #cccccc;
+    background-color: #1e1e1e;
+}
+
+/* Toolbar sits above both columns and spans the full width */
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    min-height: 48px;
+    padding: 6px 16px;
+    background-color: #2d2d30;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+.toolbar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-message {
+    max-width: 200px;
+    margin-right: 4px;
+    font-size: 12px;
+    color: #89d185;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.status-message.error {
+    color: #f48771;
+}
+
+.toolbar-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #0e639c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+    background-color: #1177bb;
+}
+
+.toolbar-btn:focus-visible {
+    outline: 2px solid #75beff;
+    outline-offset: 2px;
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.toolbar-btn-danger {
+    background-color: #a1260d;
+}
+
+.toolbar-btn-danger:hover:not(:disabled) {
+    background-color: #c72e0f;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.search-input {
+    width: 140px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #cccccc;
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+}
+
+.search-input:focus {
+    outline: 1px solid #0e639c;
+    border-color: #0e639c;
+}
+
+.search-input:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.search-hit-list {
+    list-style: none;
+    max-height: 220px;
+    margin: 0;
+    overflow-y: auto;
+}
+
+.search-hit-item {
+    display: block;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #9cdcfe;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-hit-item:hover {
+    background-color: #37373d;
+    color: #ffffff;
+}
+
+.search-hit-item.active {
+    color: #ffffff;
+    background-color: #0e639c;
+}
+
+/* Pinned search results: bottom-right, does not block the editor */
+.search-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    width: min(280px, calc(100% - 32px));
+    max-height: min(360px, calc(100vh - 80px));
+    padding: 10px 12px 12px;
+    background-color: #2d2d30;
+    border: 1px solid #3c3c3c;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.search-panel[hidden] {
+    display: none;
+}
+
+.search-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.search-panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.search-panel-close {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.search-panel-empty {
+    margin: 0;
+    font-size: 12px;
+    color: #888888;
+}
+
+/* Remaining viewport height is split into a 220px sidebar and a flexible editor */
+.workspace {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #252526;
+    border-right: 1px solid #3c3c3c;
+}
+
+.sidebar-heading {
+    padding: 12px 16px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #bbbbbb;
+}
+
+.create-form {
+    display: flex;
+    gap: 6px;
+    padding: 0 12px 12px;
+}
+
+.create-input {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #cccccc;
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+}
+
+.create-input:focus {
+    outline: 1px solid #0e639c;
+    border-color: #0e639c;
+}
+
+.create-btn {
+    flex-shrink: 0;
+    padding: 6px 10px;
+}
+
+.file-list {
+    list-style: none;
+    overflow-y: auto;
+}
+
+.file-list-empty {
+    padding: 8px 16px 16px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #888888;
+}
+
+.file-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #cccccc;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.file-item:hover {
+    background-color: #2a2d2e;
+}
+
+.file-item.active {
+    color: #ffffff;
+    background-color: #37373d;
+}
+
+.file-item.dirty::after {
+    content: " •";
+    color: #89d185;
+}
+
+.editor-pane {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+}
+
+.editor-label {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #9cdcfe;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+/* Monaco needs an explicit height; flex + min-height: 0 lets it fill the pane */
+.editor {
+    flex: 1;
+    min-height: 0;
+}
+
+/* Fallback message when the editor CDN cannot be loaded */
+.editor-fallback {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #f48771;
+    text-align: center;
+}
+
+.editor-fallback[hidden] {
+    display: none;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal-dialog {
+    width: min(420px, calc(100% - 32px));
+    padding: 20px 22px;
+    background-color: #2d2d30;
+    border: 1px solid #3c3c3c;
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.modal-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.modal-body {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #cccccc;
+}
+
+.modal-file-list {
+    margin: 0 0 12px;
+    padding-left: 20px;
+    font-size: 13px;
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    color: #9cdcfe;
+}
+
+.modal-file-list li {
+    margin: 4px 0;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}

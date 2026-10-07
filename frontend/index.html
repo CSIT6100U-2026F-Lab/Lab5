@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5 — Online Code Explorer</title>
+    <!-- Page styles: layout, colors, and typography -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top toolbar that spans the full width of the page -->
+    <header class="toolbar">
+        <h1 class="toolbar-title">📁 Lab 5 — Online Code Explorer</h1>
+        <div class="toolbar-actions">
+            <span id="status-message" class="status-message" role="status"></span>
+            <form id="search-form" class="search-form">
+                <input
+                    id="search-keyword"
+                    class="search-input"
+                    type="text"
+                    placeholder="Search"
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-label="Search keyword"
+                    disabled
+                >
+                <button id="search-btn" class="toolbar-btn" type="submit" disabled>Search</button>
+            </form>
+            <button id="count-btn" class="toolbar-btn" type="button">Count</button>
+            <button id="refresh-btn" class="toolbar-btn" type="button">Refresh</button>
+            <button id="save-btn" class="toolbar-btn" type="button">Save</button>
+            <button id="delete-btn" class="toolbar-btn toolbar-btn-danger" type="button">Delete</button>
+        </div>
+    </header>
+
+    <!-- Two-column workspace: file list on the left, editor on the right -->
+    <div class="workspace">
+        <aside class="sidebar">
+            <h2 class="sidebar-heading">Files</h2>
+            <!-- Create uses POST /create/{filename} -->
+            <form id="create-form" class="create-form">
+                <input
+                    id="new-filename"
+                    class="create-input"
+                    type="text"
+                    placeholder="new_file.py"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+                <button id="new-btn" class="toolbar-btn create-btn" type="submit">New</button>
+            </form>
+            <ul id="file-list" class="file-list"></ul>
+        </aside>
+
+        <section class="editor-pane">
+            <div id="editor-label" class="editor-label"></div>
+            <!-- Monaco Editor mounts into this container -->
+            <div id="editor" class="editor"></div>
+            <!-- Shown only when the Monaco CDN fails to load -->
+            <div id="editor-fallback" class="editor-fallback" hidden></div>
+        </section>
+    </div>
+
+    <!-- Confirm discarding local drafts before Refresh / page reload -->
+    <div id="discard-overlay" class="modal-overlay" hidden>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="discard-title">
+            <h3 id="discard-title" class="modal-title">Unsaved changes</h3>
+            <p class="modal-body">The following files have not been saved:</p>
+            <ul id="discard-file-list" class="modal-file-list"></ul>
+            <p class="modal-body">Discard these drafts and refresh?</p>
+            <div class="modal-actions">
+                <button id="discard-cancel" class="toolbar-btn" type="button">Cancel</button>
+                <button id="discard-confirm" class="toolbar-btn toolbar-btn-danger" type="button">Discard and refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyword search results: pinned corner panel, closed only via Close -->
+    <aside id="search-panel" class="search-panel" hidden>
+        <div class="search-panel-header">
+            <h3 id="search-title" class="search-panel-title">Search results</h3>
+            <button id="search-close" class="toolbar-btn search-panel-close" type="button">Close</button>
+        </div>
+        <p id="search-empty" class="search-panel-empty" hidden>No matches</p>
+        <ul id="search-hit-list" class="search-hit-list"></ul>
+    </aside>
+
+    <!-- Search UI is kept but unused in this lab; use Count for word count -->
+    <script src="app.js"></script>
+</body>
+</html>
